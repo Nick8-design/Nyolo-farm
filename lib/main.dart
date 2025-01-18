@@ -1,8 +1,12 @@
 import 'dart:convert';
 
 import 'package:birds/providers.dart';
+import 'package:birds/screens/about_us.dart';
 import 'package:birds/screens/bird_item/buy_bard.dart';
+import 'package:birds/screens/help.dart';
 import 'package:birds/screens/homepage/home_page.dart';
+import 'package:birds/screens/rate_us.dart';
+import 'package:birds/screens/terms_condition.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -72,7 +76,38 @@ class _Bird extends State<MyApp> {
               );
 
             }),
-            ]
+        GoRoute(
+            path: '/about',
+            builder: (context,state){
+
+              return const AboutUsPage();
+
+            }),
+        GoRoute(
+            path: '/help',
+            builder: (context,state){
+
+              return const  HelpPage();
+
+            }),
+        GoRoute(
+            path: '/terms',
+            builder: (context,state){
+
+              return const  TermsAndConditionsPage();
+
+            }),
+        GoRoute(
+            path: '/rate',
+            builder: (context,state){
+
+              return const  RateUsPage();
+
+            }),
+
+
+
+      ]
 
 
 

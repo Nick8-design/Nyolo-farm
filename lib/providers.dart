@@ -62,7 +62,52 @@ final favoritesProvider = StateNotifierProvider<FavoritesNotifier, Set<String>>(
       (ref) => FavoritesNotifier(),
 );
 
+final cartProvider = StateNotifierProvider<CartNotifier, Set<String>>(
+      (ref) => CartNotifier(),
+);
+
+
+
 const String prefsFavoriteKey = 'fav';
+const String prefsCartKey = 'cart';
+
+
+
+class CartNotifier extends StateNotifier<Set<String>> {
+  CartNotifier() : super({}) {
+    _loadFavorites();
+  }
+
+  Future<void> _loadFavorites() async {
+    final prefs = await SharedPreferences.getInstance();
+    final storedFavorites = prefs.getStringList(prefsCartKey) ?? [];
+    state = storedFavorites.toSet();
+  }
+
+  Future<void> _saveFavorites() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setStringList(prefsCartKey, state.toList());
+  }
+
+  void toggleFavorite(String birdId) {
+    if (state.contains(birdId)) {
+      state = {...state}..remove(birdId);
+    } else {
+      state = {...state}..add(birdId);
+    }
+    _saveFavorites();
+  }
+
+  void remove(String birdId){
+    if (state.contains(birdId)) {
+      state = {...state}..remove(birdId);
+    }
+    _saveFavorites();
+  }
+
+
+
+}
 
 class FavoritesNotifier extends StateNotifier<Set<String>> {
   FavoritesNotifier() : super({}) {
@@ -88,5 +133,15 @@ class FavoritesNotifier extends StateNotifier<Set<String>> {
     }
     _saveFavorites();
   }
+
+  void remove(String birdId){
+    if (state.contains(birdId)) {
+      state = {...state}..remove(birdId);
+    }
+    _saveFavorites();
+  }
+
+
+
 }
 

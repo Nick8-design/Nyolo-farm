@@ -1,3 +1,4 @@
+import 'package:birds/components/cart_bird.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -62,10 +63,33 @@ class HotLandscapeCard extends ConsumerWidget {
             ListTile(
               title: Text(hotData.name,overflow: TextOverflow.ellipsis,maxLines: 1,),
               subtitle:  Text('Ksh ${hotData.price}'),
+
+              trailing: IconButton(
+                icon: const Icon(Icons.add),
+                tooltip: 'add to cart',
+                onPressed: () {
+                  _showBottomSheet(hotData, context);
+
+                },
+
+              ),
             ),
           ],
         ),
       ),
     );
   }
+
+  void _showBottomSheet(Bird item,BuildContext context) {
+    showModalBottomSheet<void>(
+      isScrollControlled: true,
+      context: context,
+      constraints: const BoxConstraints(maxWidth: 480),
+      builder: (context) =>
+          ItemDetails(item: item),
+    );
+  }
+
+
+
 }
